@@ -1,0 +1,27 @@
+{
+  "name": "rectamble",
+  "version": "1.0.0",
+  "description": "Rectamble board game",
+  "main": "client/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rectamble",
+    "ts",
+    "typescript",
+    "canvas",
+    "html",
+    "css",
+    "vanilla-js"
+  ],
+  "private": true,
+  "author": "Roman Melnyk <https://melnyk.site>",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.6",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
