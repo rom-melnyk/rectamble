@@ -16,6 +16,19 @@ function rectamble() {
     canvas,
     rect,
   });
+
+  canvasEl.addEventListener('mousemove', (e: MouseEvent) => {
+    // cell coords here
+    const mouseX = canvas.coordsXToCell(e.offsetX);
+    const mouseY = canvas.coordsYToCell(e.offsetY);
+    const { x: prevX, y: prevY } = rect;
+    rect.x = mouseX;
+    rect.y = mouseY;
+    field.fitRectangle(rect);
+    if (rect.x !== prevX || rect.y !== prevY) {
+      canvas.drawRectangles([rect]);
+    }
+  });
 }
 
 if (typeof window !== 'undefined') {

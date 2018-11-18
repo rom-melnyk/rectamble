@@ -1,5 +1,5 @@
 import { Colors } from './colors.enum';
-
+import { Rectangle } from './rectangle';
 
 export class Cell {
   public x: number = 0;
@@ -40,5 +40,20 @@ export class Field {
         cb(cell);
       })
     })
+  }
+
+  public fitRectangle(rect: Rectangle) {
+    if (rect.left < 0) {
+      rect.x = 0;
+    }
+    if (rect.left < 0) {
+      rect.y = 0;
+    }
+    if (rect.right > this.width) {
+      rect.right = this.width;
+    }
+    if (rect.bottom > this.height) {
+      rect.bottom = this.height;
+    }
   }
 }

@@ -12,32 +12,48 @@ export class Rectangle {
   public get left(): number {
     return this.x;
   }
-  public set left(l: number) {
-    throw new Error('.left is readonly');
+  public set left(left: number) {
+    this.x = left;
   }
 
   // cell edge
   public get right(): number {
     return this.x + this.width;
   }
-  public set right(r: number) {
-    throw new Error('.right is readonly');
+  public set right(right: number) {
+    this.x = right - this.width;
   }
 
   // cell edge
   public get top(): number {
     return this.y;
   }
-  public set top(t: number) {
-    throw new Error('.top is readonly');
+  public set top(top: number) {
+    this.y = top;
   }
 
   // cell edge
   public get bottom(): number {
     return this.y + this.height;
   }
-  public set bottom(b: number) {
-    throw new Error('.bottom is readonly');
+  public set bottom(bottom: number) {
+    this.y = bottom - this.height;
+  }
+
+  // center coords might be fractional
+  public get centerX(): number {
+    return (this.left + this.right) / 2;
+  }
+  public set centerX(c: number) {
+    throw new Error('.centerX is readonly');
+  }
+
+  // center coords might be fractional
+  public get centerY(): number {
+    return (this.top + this.bottom) / 2;
+  }
+  public set centerY(c: number) {
+    throw new Error('.centerY is readonly');
   }
 
   constructor(x: number, y: number, width: number, height: number, color: Colors) {
@@ -49,7 +65,13 @@ export class Rectangle {
   }
 
   public rotate() {
+    const prevCenterX = this.centerX;
+    const prevCenterY = this.centerY;
     [ this.width, this.height ] = [ this.height, this.width ];
+    const compensateX = Math.trunc(this.centerX - prevCenterX);
+    const compensateY = Math.trunc(this.centerY - prevCenterY);
+    this.x -= compensateX;
+    this.y -= compensateY;
   }
 
   public forEachXYAround(cb: (x: number, y: number) => void): void {
