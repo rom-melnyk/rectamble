@@ -16,14 +16,6 @@ function rectamble() {
 
   canvas.drawRectangles(rects);
 
-  // TODO remove after debug
-  Object.assign(window, {
-    field,
-    canvas,
-    rect1,
-    rect2,
-  });
-
   canvasEl.addEventListener('mousemove', (e: MouseEvent) => {
     // cell coords here
     const mouseX = canvas.coordsXToCell(e.offsetX);

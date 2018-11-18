@@ -5,17 +5,30 @@ import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 const outputDir = path.resolve(__dirname, 'server/static');
 
 const baseConfig: webpack.Configuration = {
-  entry: './client/index.ts',
+  entry: [
+    './client/index.ts',
+    './client/styles/style.scss'
+  ],
   output: {
     path: outputDir,
     filename: 'script.js'
   },
   resolve: {
-    extensions: [ '.ts' ]
+    // ".js" must be here for SCSS loader to work
+    extensions: [ '.ts', '.js', '.scss' ]
   },
   module: {
     rules: [
-      { test: /\.ts/, loader: 'ts-loader' }
+      { test: /\.ts$/, loader: 'ts-loader' },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
+        ],
+      }
     ]
   },
   plugins: [
