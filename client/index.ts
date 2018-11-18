@@ -21,11 +21,19 @@ function rectamble() {
     // cell coords here
     const mouseX = canvas.coordsXToCell(e.offsetX);
     const mouseY = canvas.coordsYToCell(e.offsetY);
-    const { x: prevX, y: prevY } = rect;
-    rect.x = mouseX;
-    rect.y = mouseY;
+    const { x: prevX, y: prevY, centerX, centerY } = rect;
+    rect.x += Math.trunc(mouseX - centerX);
+    rect.y += Math.trunc(mouseY - centerY);
     field.fitRectangle(rect);
     if (rect.x !== prevX || rect.y !== prevY) {
+      canvas.drawRectangles([rect]);
+    }
+  });
+
+  window.addEventListener('keypress', (e: KeyboardEvent) => {
+    if (e.key === 'r' || e.key === 'R') {
+      rect.rotate();
+      field.fitRectangle(rect);
       canvas.drawRectangles([rect]);
     }
   });

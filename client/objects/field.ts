@@ -43,11 +43,11 @@ export class Field {
   }
 
   public fitRectangle(rect: Rectangle) {
-    if (rect.left < 0) {
-      rect.x = 0;
+    if (rect.top < 0) {
+      rect.top = 0;
     }
     if (rect.left < 0) {
-      rect.y = 0;
+      rect.left = 0;
     }
     if (rect.right > this.width) {
       rect.right = this.width;
