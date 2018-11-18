@@ -74,6 +74,13 @@ export class Rectangle {
     this.y -= compensateY;
   }
 
+  public intersects(rect: Rectangle): boolean {
+    const dCenterX = Math.abs(this.centerX - rect.centerX);
+    const dCenterY = Math.abs(this.centerY - rect.centerY);
+    return dCenterX < (this.width + rect.width) / 2
+      && dCenterY < (this.height + rect.height) / 2;
+  }
+
   public forEachXYAround(cb: (x: number, y: number) => void): void {
     const coords: Array<{ x: number, y: number }> = [
       ...Array(this.width).fill(null)
