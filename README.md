@@ -29,6 +29,14 @@ Whoever occupies more space wins.
 Drawing is done on canvas2D.
 
 
+## Development and production
+
+- `npm run client:dev`
+- `npm run client:prod` to compile minified production code.
+- `npm run server` starts the server on `:8080`.
+
+
+
 ## Credits
 
 Roman Melnyk, https://melnyk.site
