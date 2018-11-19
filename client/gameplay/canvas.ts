@@ -60,6 +60,7 @@ export class Canvas {
       this.ctx.lineTo(this.width, y);
     }
     this.ctx.lineWidth = 1;
+    this.ctx.setLineDash([]);
     this.ctx.strokeStyle = 'hsla(240, 50%, 80%, .3)';
     this.ctx.stroke();
   }
@@ -69,10 +70,12 @@ export class Canvas {
     const y = this.cellYToCoords(rect.y);
     const width = this.cellWidthToCoords(rect.width);
     const height = this.cellHeightToCoords(rect.height);
-    this.ctx.fillStyle = DrawColors[rect.color].fill;
+    const { fill, stroke } = this.getStyle(rect);
+    this.ctx.fillStyle = fill;
     this.ctx.fillRect(x, y, width, height);
     this.ctx.lineWidth = this.hGap / 2;
-    this.ctx.strokeStyle = DrawColors[rect.color].stroke;
+    this.ctx.setLineDash(rect.isValidPosition ? [] : [ this.hGap * 2 ]);
+    this.ctx.strokeStyle = stroke;
     this.ctx.strokeRect(x, y, width, height);
   }
 
@@ -87,5 +90,15 @@ export class Canvas {
   }
   private cellHeightToCoords(height: number): number {
     return height * this.cellSize + this.vGap * (height - 1);
+  }
+
+  private getStyle(rect: Rectangle): { fill: string, stroke: string } {
+    const rectStyles = DrawColors[rect.color];
+    return rect.isParked
+      ? rectStyles.parked
+      : (rect.isValidPosition
+        ? rectStyles.validPosition
+        : rectStyles.invalidPosition
+      );
   }
 }

@@ -7,6 +7,8 @@ export class Rectangle {
   public width: number = 0;
   public height: number = 0;
   public color: Colors;
+  public isParked: boolean = false;
+  public isValidPosition: boolean = false;
 
   // cell edge
   public get left(): number {
@@ -81,20 +83,14 @@ export class Rectangle {
       && dCenterY < (this.height + rect.height) / 2;
   }
 
-  public forEachXYAround(cb: (x: number, y: number) => void): void {
-    const coords: Array<{ x: number, y: number }> = [
-      ...Array(this.width).fill(null)
-        .map((_, x) => ({ x: this.x + x, y: this.top - 1 })),
-      ...Array(this.width).fill(null)
-        .map((_, x) => ({ x: this.x + x, y: this.bottom + 1 })),
-      ...Array(this.height).fill(null)
-        .map((_, y) => ({ x: this.left - 1, y: this.y + y })),
-      ...Array(this.height).fill(null)
-        .map((_, y) => ({ x: this.right + 1, y: this.y + y })),
+  public touches(rect: Rectangle): boolean {
+    const sideRects = [
+      new Rectangle(this.left, this.top - 1, this.width, 1, this.color), // top
+      new Rectangle(this.left, this.bottom, this.width, 1, this.color), // bottom
+      new Rectangle(this.left - 1, this.top, 1, this.height, this.color), // left
+      new Rectangle(this.right, this.top, 1, this.height, this.color), // right
     ];
 
-    coords.forEach(({ x, y }) => {
-      cb(x, y);
-    });
+    return sideRects.some(sideRect => sideRect.intersects(rect));
   }
 }
